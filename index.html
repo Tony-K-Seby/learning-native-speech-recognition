@@ -22,7 +22,14 @@ Sites can use Javascript
     word.appendChild(element)
 
     recognition.addEventListener('result', e => {
-        console.log(e.results)
+        const transcript = Array.from(e.results)
+            .map(result => result[0].transcript)
+            .join('')
+        element.textContent = transcript
+        if(e.results[0].isFinal){
+            element = document.createElement('p')
+            word.appendChild(element)
+        }
     })
 
     recognition.addEventListener('end', recognition.start)
